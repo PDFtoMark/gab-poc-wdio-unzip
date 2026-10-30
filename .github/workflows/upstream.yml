@@ -1,0 +1,22 @@
+# Structural replica of newrelic/newrelic-ios-agent .github/workflows/uploadApp.yml
+# (same workflow NAME, which is what workflow_run matches on). Not the real target.
+name: Upload iOS NRTestApp to LambdaTest
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create app id artifact
+        run: |
+          mkdir -p out
+          echo "com.newrelic.NRApp.bitcode.2026-10-30T12-34-56" > out/last-app-id
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lambdatest-app-id
+          path: out/last-app-id
