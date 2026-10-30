@@ -53,8 +53,8 @@ jobs:
           echo "workspace=$GITHUB_WORKSPACE"
       - name: regex validator behaviour on crafted ids
         run: |
-          for v in 'ok-id.1' 'a;b' 'a$(id)' 'a`id`' 'a%0aFOO=1' 'a:b' 'x/y' 'a
-FOO=1'; do
+          NL=$(printf '\n')
+          for v in 'ok-id.1' 'a;b' 'a$(id)' 'a`id`' 'a%0aFOO=1' 'a:b' 'x/y' "a${NL}FOO=1"; do
             if echo "$v" | grep -Eq '^[A-Za-z0-9._:-]{1,200}$'; then r=ACCEPT; else r=REJECT; fi
             printf 'value=%q -> %s\n' "$v" "$r"
           done
